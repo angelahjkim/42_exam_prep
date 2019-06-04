@@ -1,61 +1,55 @@
 #include <unistd.h>
 
-int		is_word(char c)
+// if there are no words, display newline
+
+/*
+** test cases:
+** "" 
+** "         "
+** "one"
+** " space "
+** "    spaces before   and after   "
+** " = "
+*/
+
+#include <stdio.h>  // testing
+
+int     is_blank(char c)
 {
-	if (c == ' ' || c == '\t' || c == '\0')
-		return (0);
-	return (1);
+    if (c == ' ' || c == '\t')
+        return (1);
+    return (0);
 }
 
-void	print_word(char *str, int start, int end)
+void    expand_str(char *str)
 {
-	while (start < end)
-	{
-		write(1, &str[start], 1);
-		start++;
-	}
+    int i = 0;
+
+    while (str[i] != '\0')
+    {
+        while (is_blank(str[i]))
+            str++;
+        if (!is_blank(str[i]))
+        {
+            while (!is_blank(str[i]) && str[i] != '\0')
+            {
+                write(1, &str[i], 1);
+                i++;
+            }
+        }
+        while (is_blank(str[i]))
+            str++;
+        if (str[i] != '\0')
+            write(1, "   ", 3);
+    }
 }
 
-int		ft_strlen(char *str)
+int     main(int ac, char **av)
 {
-	int len = 0;
-	
-	while (*str)
-	{
-		len++;
-		str++;
-	}
-	return (len);
-}
-
-int		main(int ac, char **av)
-{
-	int len;
-	int start;
-	int end;
-	int	not_first;
-
-	if (ac == 2)
-	{
-		len = ft_strlen(av[1]);
-		start = 0;
-		end = 0;
-		not_first = 0;
-		while (end < len)
-		{
-			if (is_word(av[1][end]))
-			{
-				if (not_first)
-					write(1, "   ", 3);
-				start = end;
-				while (is_word(av[1][end]))
-					end++;
-				print_word(av[1], start, end);
-				not_first = 1;
-			}
-			end++;
-		}
-	}
-	write(1, "\n", 1);
-	return (0);
+    if (ac == 2)
+    {
+        expand_str(av[1]);
+    }
+    write(1, "\n", 1);
+    return (0);
 }

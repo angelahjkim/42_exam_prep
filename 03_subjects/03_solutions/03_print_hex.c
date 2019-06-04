@@ -12,7 +12,7 @@ int		ft_atoi(char *str)
 	num = 0;
 	while (*str)
 	{
-		num += *str - '0';
+		num += *str - '0';		// num = num * 10 + (*str - '0'); str++;
 		str++;
 		if (*str)
 			num *= 10;

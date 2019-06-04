@@ -1,78 +1,69 @@
-/*
-** ADD PRIME SUM: Write a program that takes a positive integer as argument
-** and displays the sum of all prime numbers inferior or equal to it
-** followed by a newline. If argument is not positive or there are more than 1
-** just display 0 followed by a newline.
-*/
-
 #include <unistd.h>
 
-int		is_prime(int num)
+void    ft_putchar(char c)
 {
-	int i;
-
-	i = 2;
-	while (i < num)
-	{
-		if (num % i == 0)
-			return (0);
-		i++;
-	}
-	return (1);
+    write(1, &c, 1);
 }
 
-int		ft_atoi(char *str)
+void    ft_putnbr(int n)
 {
-	int num;
-
-	num = 0;
-	while (*str == ' ' || *str == '\n' || *str == '\t' || *str == '\v'
-			|| *str == '\f' || *str == '\r' || *str == '+')
-		str++;
-	while (*str)
-	{
-		num += (*str - '0');
-		str++;
-		if (*str)
-			num *= 10;
-	}
-	return (num);
+    if (n / 10)
+        ft_putnbr(n / 10);
+   ft_putchar(n % 10 + '0');
 }
 
-void	ft_putchar(char c)
+int     ft_atoi(char *str)
 {
-	write(1, &c, 1);
+    int num = 0;
+
+    if (*str == '+')
+        str++;
+    while (*str)
+    {
+        num = num * 10 + (*str - '0');
+        str++;
+    }
+    return (num);
 }
 
-void	ft_putnbr(int num)
+int     is_prime(int n)
 {
-	if (num / 10)
-		ft_putnbr(num / 10);
-	ft_putchar(num % 10 + '0');
+    int i = 2;
+
+    while (i < n)
+    {
+        if (n % i == 0)
+            return (0);
+        i++;
+    }
+    return (1);
 }
 
-int		main(int ac, char **av)
+int     add_prime_sum(int n)
 {
-	int num;
-	int sum;
+    int sum = 0;
+    int i = 2;
 
-	if (ac != 2 || av[1][0] == '-')
-	{
-		write(1, "0\n", 2);
-		return (0);
-	}
-	else
-	{
-		num = ft_atoi(av[1]);
-		sum = 0;
-		while (num > 1)
-		{
-			if (is_prime(num))
-			   sum += num;
-			num--;	
-		}
-		ft_putnbr(sum);
-		write(1, "\n", 1);
-	}
-	return (0);
+    while (i <= n)
+    {
+        if (is_prime(i))
+            sum += i;
+        i++;
+    }
+    return (sum);
+}
+
+int     main(int ac, char **av)
+{
+    int num;
+
+    if (ac != 2)
+        return (write(1, "0\n", 2));
+    if (ac == 2)
+    {
+        num = ft_atoi(av[1]);
+        ft_putnbr(add_prime_sum(num));
+    }
+    write(1, "\n", 1);
+    return (0);
 }

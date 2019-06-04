@@ -1,82 +1,63 @@
-/*
-** TAB MULT: Write a program that displays a number's multiplication table.
-*/
-
 #include <unistd.h>
 
-void	ft_putchar(char c)
+void    ft_putchar(char c)
 {
-	write(1, &c, 1);
+    write(1, &c, 1);
 }
 
-void	ft_putstr(char *str)
+void    ft_putnbr(int n)
 {
-	while (*str)
-	{
-		ft_putchar(*str);
-		str++;
-	}
+    if (n / 10)
+        ft_putnbr(n / 10);
+    ft_putchar(n % 10 + '0');
 }
 
-void	ft_putnbr(int n)
+void    ft_putstr(char *str)
 {
-	if (n / 10)
-	{
-		ft_putnbr(n / 10);
-		ft_putchar(n % 10 + '0');
-	}
-	else
-		ft_putchar(n + '0');
+    while (*str)
+    {
+        write(1, str, 1);
+        str++;
+    }
 }
 
-int		ft_atoi(char *str)
+int    ft_atoi(char *str)
 {
-	int num = 0;
+    int num = 0;
 
-	if (*str == '+')
-		str++;
-	while (*str)
-	{
-		num += *str - '0';
-		str++;
-		if (*str)
-			num *= 10;
-	}
-	return (num);
+    if (*str == '+')
+        str++;
+    while (*str)
+    {
+        num = num * 10 + (*str - '0');
+        str++;
+    }
+    return (num);
 }
 
-int		main(int ac, char **av)
+void     print_table(int n)
 {
-	int num;
-	int results[9];
-	char i;
-	int j;
+    int i = 1;
+    int result;
 
-	if (ac < 2)
-	{
-		write(1, "\n", 1);
-		return (0);
-	}
-	num = ft_atoi(av[1]);
-	j = 0;
-	while (j < 9)
-	{
-		results[j] = num * (j + 1);
-		j++;
-	}
-	i = '1';
-	j = 0;
-	while (j < 9)
-	{
-		ft_putchar(i);
-		ft_putstr(" x ");
-		ft_putnbr(num);
-		ft_putstr(" = ");
-		ft_putnbr(results[j]);
-		ft_putchar('\n');
-		j++;
-		i++;
-	}
+    while (i < 10)
+    {
+        result = n * i;
+        ft_putnbr(i);
+        ft_putstr(" x 9 = ");
+        ft_putnbr(result);
+        if (i != 9)
+            ft_putchar('\n');
+        i++;
+    }
+}
 
-	return (0);
+int     main(int ac, char **av)
+{
+    if (ac > 1)
+    {
+        print_table(ft_atoi(av[1]));
+    }
+    write(1, "\n", 1);
+    return (0);
 }
