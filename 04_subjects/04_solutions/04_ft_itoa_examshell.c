@@ -54,7 +54,7 @@ char    *ft_itoa(int nbr)
 int     main(void)
 {
     int num = INT_MIN;
-
+    
     printf("%s\n", ft_itoa(num));
     return (0);
 }

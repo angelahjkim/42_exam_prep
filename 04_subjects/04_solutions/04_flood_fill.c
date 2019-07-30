@@ -1,4 +1,6 @@
-#include "ft.h"	// testing
+#include "flood_fill.h"	// for TESTING ONLY (include flood_fill function prototype)
+
+
 
 void	fill(char **tab, t_point size, int x, int y, char c)
 {
@@ -24,6 +26,10 @@ void	flood_fill(char **tab, t_point size, t_point begin)
 	c = tab[begin.y][begin.x];
 	fill(tab, size, begin.x, begin.y, c);
 }
+
+
+
+
 
 // for testing
 #include <stdlib.h>

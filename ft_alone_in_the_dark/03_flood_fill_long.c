@@ -29,6 +29,7 @@ void	recur(char **tab, t_point size, t_point begin, char to_fill)
 {
 	if (tab[begin.y][begin.x] != to_fill)
 		return ;
+
 	tab[begin.y][begin.x] = 'F';
 
 	if (begin.y > 0)
@@ -79,7 +80,7 @@ int main(void)
 {
 	//char **area;
 	t_point size = {8, 5};
-	t_point begin = {6, 4};
+	t_point begin = {0, 0};
 
 		char **tab = malloc(sizeof(char *) * size.y);
 		tab[0] = strdup("11111111");

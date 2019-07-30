@@ -6,6 +6,7 @@ int     greater(int a, int b)
         return (a);
     else
         return (b);
+    
 }
 
 int     sorted(int *tab, unsigned int size)
@@ -24,8 +25,8 @@ int     sorted(int *tab, unsigned int size)
 
 void    sort_int_tab(int *tab, unsigned int size)
 {
-    int tmp;
     unsigned int i;
+    int tmp;
 
     while (!sorted(tab, size))
     {
@@ -34,9 +35,9 @@ void    sort_int_tab(int *tab, unsigned int size)
         {
             if (tab[i] == greater(tab[i], tab[i + 1]))
             {
-             tmp = greater(tab[i], tab[i + 1]);
-              tab[i] = tab[i + 1];
-               tab[i + 1] = tmp;
+                tmp = greater(tab[i], tab[i + 1]);
+                tab[i] = tab[i + 1];
+                tab[i + 1] = tmp;
             }
             i++;
         }
@@ -53,9 +54,10 @@ void    print_array(int *arr, int size)
 
     while (i < size)
     {
-        printf("%d\n", arr[i]);
+        printf("[%d]", arr[i]);
         i++;
     }
+    printf("\n");
 }
 
 int     main(void)

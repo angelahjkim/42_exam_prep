@@ -1,6 +1,5 @@
+// for testing ONLY
 #include "list.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 int		croissant(int a, int b)
 {
@@ -9,10 +8,11 @@ int		croissant(int a, int b)
 	else // 2 > 1 = 0
 		return (0);
 }
+// end of TESTING
 
 int		tri(t_list *lst, int (*cmp)(int, int))
 {
-	while (lst->next != NULL)
+	while (lst->next)
 	{
 		if ((*cmp)(lst->data, lst->next->data) == 0)
 			return (0);
@@ -28,10 +28,10 @@ t_list 	*sort_list(t_list *lst, int (*cmp)(int, int))
 
 	swap = 0;
 	first = lst;
-	while (tri(first, croissant) == 0)
+	while (tri(first, cmp) == 0)
 	{
 		lst = first;
-		while (lst->next != NULL)
+		while (lst->next)
 		{
 			if ((*cmp)(lst->data, lst->next->data) == 0)
 			{
@@ -43,6 +43,21 @@ t_list 	*sort_list(t_list *lst, int (*cmp)(int, int))
 		}
 	}
 	return (first);
+}
+
+
+// for testing ONLY
+#include <stdio.h>
+#include <stdlib.h>
+
+void	print_list(t_list *lst)
+{
+	while (lst)
+	{
+		printf("[%d]", lst->data);
+		lst = lst->next;
+	}
+	printf("\n");
 }
 
 int main(void)
@@ -57,13 +72,11 @@ int main(void)
 	lst->next->next->data = 0;
 	lst->next->next->next = NULL;
 
+	print_list(lst);
+
 	lst = sort_list(lst, croissant);
 
-	while (lst != NULL)
-	{
-		printf("%d\n", lst->data);
-	    lst = lst->next;
-	}
+	print_list(lst);
 
 	return (0);
 }

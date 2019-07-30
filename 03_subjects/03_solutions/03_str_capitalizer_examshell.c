@@ -1,78 +1,37 @@
 #include <unistd.h>
 
-int		is_blank(char c)
+int		isBlank(char c)
 {
 	if (c == ' ' || c == '\t')
 		return (1);
 	return (0);
 }
 
-int		is_letter(char c)
+void	strCapitalize(char *str)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	return (0);
-}
-
-void	make_upper(char c)
-{
-	if (c >= 'a' && c <= 'z')
-	{
-		c -= 32;
-		write(1, &c, 1);
-	}
-	else
-		write(1, &c, 1);
-}
-
-void	make_lower(char c)
-{
-	if (c >= 'A' && c <= 'Z')
-	{
-		c += 32;
-		write(1, &c, 1);
-	}
-	else
-		write(1, &c, 1);
-}
-
-void	str_capitalizer(char *str)
-{
-	int i;
-
-	i = 0;
+	int i = 0;
 	while (str[i])
 	{
-		while (is_blank(str[i]) && str[i])
+		while (isBlank(str[i]))
 		{
 			write(1, &str[i], 1);
 			i++;
 		}
-		if (!is_blank(str[i]))
+		if (!isBlank(str[i]) && str[i])
 		{
-			while (!is_letter(str[i]) && str[i])
+			if (str[i] >= 'a' && str[i] <= 'z')
+				str[i] -= 32;
+			write(1, &str[i], 1);
+			i++;
+			while (!isBlank(str[i]) && str[i])
 			{
+				if (str[i] >= 'A' && str[i] <= 'Z')
+					str[i] += 32;
 				write(1, &str[i], 1);
 				i++;
 			}
-			if (is_letter(str[i]) && (i == 0 || is_blank(str[i - 1])))
-			{
-				make_upper(str[i]);
-				i++;
-			}
-			while (is_letter(str[i]) && str[i])
-			{
-				make_lower(str[i]);
-				i++;
-			}
 		}
-		if (str[i])
-			write(1, &str[i], 1);
-		if (str[i] == '\0')
-			break ;
-		i++;
 	}
-	write(1, "\n", 1);
 }
 
 int		main(int ac, char **av)
@@ -80,14 +39,12 @@ int		main(int ac, char **av)
 	int i;
 
 	if (ac < 2)
-	{
-		write(1, "\n", 1);
-		return (0);
-	}
+		return (write(1, "\n", 1));
 	i = 1;
 	while (i < ac)
 	{
-		str_capitalizer(av[i]);
+		strCapitalize(av[i]);
+		write(1, "\n", 1);
 		i++;
 	}
 	return (0);

@@ -51,9 +51,12 @@ int		word_count(char *str)
 
 char	**ft_split(char *str)
 {
-	char **arr;
+	char **arr = NULL;
 	int start, end, words;
 	int i, j;
+
+	if (str[0] == '\0')
+		return (arr);
 
 	words = word_count(str);
 	arr = (char **)malloc(sizeof(char *) * words);
